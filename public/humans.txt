@@ -1,0 +1,13 @@
+# TEAM
+
+    dvl -- programmer -- contato@xdvl.info
+
+# THANKS
+
+    #CDZForever @ irc.irchighway.net
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+    jQuery, Bootstrap
+    Sublime Text 2

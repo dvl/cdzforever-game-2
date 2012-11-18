@@ -1,0 +1,33 @@
+body {
+	background: #01080E url('../img/_bg.jpg');
+	margin: 30px;
+}
+
+header {
+	background: url('../img/banner.jpg') !important;
+	height: 200px;
+	margin-bottom: 15px;
+}
+
+footer {
+	padding: 16px;
+	font-weight: bold;
+	text-align: center;
+	font-size: small;
+	margin-top: 15px;
+}
+
+.container { 
+	border-radius: 8px;
+	background: rgba(0,0,0, 0.6);
+	padding: 15px;
+}
+
+#content > * {
+	margin: 16px;
+}
+
+#menu, #content, footer, header {
+	border-radius: 8px;
+	background: #F7F7F9;
+}
