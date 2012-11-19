@@ -17,18 +17,12 @@
 				<header></header>
 
 				<div class="row">
-					<div class="span12" id="wrapper">
-						<div class="row">
-							<div class="span3" id="menu">
-								<br style="clear: both">
-								@include('layout.menu')
-							</div>
-							<div class="span9" id="content">
-								<!-- <h4>@yield('title')</h4> 
-								<hr> -->
-								@yield('content')
-							</div>
-						</div>
+					<div class="span3" id="menu">
+						<br style="clear: both">
+						@include('layout.menu')
+					</div>
+					<div class="span9" id="content">
+						@yield('content')
 					</div>
 				</div>
 

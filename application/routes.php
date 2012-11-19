@@ -7,7 +7,8 @@
 */
 
 Route::get('/', 'home@index');
-Route::get('register', 'register@index');
+Route::controller('register');
+Route::controller('login');
 
 Route::group(array('before' => 'auth'), function() {
 	// páginas que só serão exibidas para usuários logados

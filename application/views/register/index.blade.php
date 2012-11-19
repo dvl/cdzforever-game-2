@@ -1,10 +1,18 @@
 @layout('layout.base')
 
 @section('title')
-	- Registro
+	Registro
 @endsection
 
 @section('content')
+	@if (Session::has('errors'))
+		<div class="alert alert-error">Por favor, corrija os seguintes erros antes de continuar:
+			{{ HTML::ul($errors); }}
+		</div>
+	@else
+		<p>Preencha o formulário abaixo para criar sua conta e começe a jogar agora mesmo.</p>
+	@endif
+	<hr>
 	{{ Form::horizontal_open() }}
 
 	{{ Form::control_group(Form::label('username', 'Usuário:'), Form::xlarge_text('username', null, array('placeholder' => 'Seu nick no jogo...'))) }}
@@ -21,5 +29,6 @@
 	{{ Form::control_group(Form::label('checkbox', ''), Form::labelled_checkbox('rules', 'Li e concordo com as '.HTML::link('internal/rules','Regras').''), '', Form::labelled_checkbox('terms', 'Li e concordo com os '.HTML::link('internal/terms','Termos de Uso').'', 'terms')) }}
 
 	{{ Form::actions(array(Buttons::primary_submit('Enviar'))) }}
+	{{ Form::token() }}
 	{{ Form::close() }}
 @endsection
