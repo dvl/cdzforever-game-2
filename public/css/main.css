@@ -3,31 +3,36 @@ body {
 	margin: 30px;
 }
 
+#wrapper {
+	border-radius: 8px;
+	background: rgba(0, 0, 0, 0.6);
+	padding: 15px;
+}
+
 header {
 	background: url('../img/banner.jpg') !important;
 	height: 200px;
 	margin-bottom: 15px;
 }
 
-footer {
+#menu { 
+	width: 252px;
+}
+
+#content {
 	padding: 16px;
+	margin-left: 16px
+}
+
+footer {
+	margin-top: 16px;
+	padding: 8px;
 	font-weight: bold;
 	text-align: center;
 	font-size: small;
-	margin-top: 15px;
 }
 
-.container { 
-	border-radius: 8px;
-	background: rgba(0, 0, 0, 0.6);
-	padding: 15px;
-}
-
-#content > * {
-	margin: 16px;
-}
-
-#menu, #content, footer, header {
+header, #menu, #content, footer {
 	border-radius: 8px;
 	background: #F7F7F9;
 }
