@@ -25,7 +25,7 @@ class Create_Users {
 			/* attr */
 			$table->integer('money')->default(200);
 			$table->integer('merits')->default(10);
-			$table->integer('armor_id')->default(0);
+			$table->integer('armor_id')->unsigned();
 
 			/* status */
 			$table->integer('cosmo')->default(200);

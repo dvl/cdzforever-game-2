@@ -9,33 +9,6 @@ class Create_Armors {
 	 */
 	public function up()
 	{
-		Schema::create('armors', function($table) {
-			$table->engine = 'InnoDB';
-
-			$table->increments('id');
-
-			/* info */
-			$table->string('name', 64);
-			$table->integer('user_id')->default(0);
-			$table->integer('category_id')->default(0);
-			$table->integer('class_id')->default(0);
-
-			/* attr */
-			$table->integer('health');
-			$table->integer('health_max');
-			$table->integer('in_use')->default(0);
-
-			$table->integer('str');
-			$table->integer('res');
-			$table->integer('dex');
-			$table->integer('vit');
-
-			$table->integer('cosmo');
-
-			$table->text('extras');
-			$table->text('attacks');
-		});
-
 		Schema::create('categories', function($table) {
 			$table->engine = 'InnoDB';
 
@@ -91,6 +64,45 @@ class Create_Armors {
 
 		foreach ($classes as $class) {
 			DB::table('classes')->insert(array(
+				'desc' => $class[0],
+				'cosmo' => $class[1],
+				'cost' => $class[2],
+			));
+		}
+
+		Schema::create('armors', function($table) {
+			$table->engine = 'InnoDB';
+
+			$table->increments('id');
+
+			/* info */
+			$table->string('name', 64);
+			$table->integer('user_id')->unsigned(); /* precisa ser unsigned pra usar fk */
+			$table->integer('category_id')->unsigned();
+			$table->integer('class_id')->unsigned();
+
+			/* attr */
+			$table->integer('health');
+			$table->integer('health_max');
+			$table->integer('in_use')->default(0);
+
+			$table->integer('str');
+			$table->integer('res');
+			$table->integer('dex');
+			$table->integer('vit');
+
+			$table->integer('cosmo');
+
+			$table->text('extras');
+			$table->text('attacks');
+		});
+
+		$armors = array(
+			array('','','','','','','','','','','','',''), /* todo: fazer um script que migre a tabela atual para um array no formato a ser usado aqui */
+		);
+
+		foreach ($armors as $armor) {
+			DB::table('armors')->insert(array(
 				'desc' => $class[0],
 				'cosmo' => $class[1],
 				'cost' => $class[2],
