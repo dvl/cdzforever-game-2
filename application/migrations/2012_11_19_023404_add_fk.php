@@ -15,9 +15,9 @@ class Add_Fk {
 			$table->foreign('class_id')->references('id')->on('classes');
 		});
 
-		Schema::table('users', function($table) {
-			$table->foreign('armor_id')->references('id')->on('armors');
-		});
+		// Schema::table('users', function($table) {
+		// 	$table->foreign('armor_id')->references('id')->on('armors');
+		// });
 	}
 
 	/**
@@ -33,9 +33,9 @@ class Add_Fk {
 			$table->drop_foreign('armors_user_id_foreign');
 		});
 
-		Schema::table('users', function($table) {
-			$table->drop_foreign('users_armor_id_foreign');
-		});
+		// Schema::table('users', function($table) {
+		// 	$table->drop_foreign('users_armor_id_foreign');
+		// });
 	}
 
 }
