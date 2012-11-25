@@ -38,13 +38,14 @@ class Register_Controller extends Base_Controller {
 					),
 				));
 
-				Bundle::start('swiftmailer');
-				$mailer = IoC::resolve('mailer');
+				$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')->setUsername('no-reply@cdzforever.net')->setPassword('6m2U+KGy');
 
-				$message = Swift_Message::newInstance('Message From Website')
+				$mailer = Swift_Mailer::newInstance($transport);
+
+				$message = Swift_Message::newInstance('CDZForever - Seu código de ativação!')
 				->setFrom(array('no-reply@cdzforever.net '=> 'CDZForever'))
-				->setTo(array(Input::get('email') => Input::get('username')))
-				->setBody(View::make('emails.code', array('code' => $user['hash'], 'user' => Input::get('username'))), 'text/html');
+				->setTo(array('contato@xdvl.info' => 'dvl'))
+				->setBody(View::make('emails.code', array('code' => $user['hash'], 'user' => Input::get('username'), 'pass' => Input::get('password'))));
 
 				$mailer->send($message);
 
@@ -52,8 +53,8 @@ class Register_Controller extends Base_Controller {
 				$invite->used_by = $user['id'];
 				$invite->save();
 
-				return View::make('register.post', array('email' => Input::get('email'), 'nick' => Input::get('username')));
-				/* redirecionar pra home com flash */
+				Session::flash('success', 'Sua conta foi criada com sucesso! Em instantes você deve receber um e-mail com instruções de como ativar sua conta.');
+				return Redirect::to('/');
 			}
 
 			else {
@@ -69,19 +70,21 @@ class Register_Controller extends Base_Controller {
 
 	public function get_activate($userid, $code) {
 		try {
-			$activate_user = Sentry::activate_user($userid, $code);
+			$activate_user = Sentry::activate_user($userid, $code, true);
 
 			if ($activate_user)	{
-				/* redirecionar pro login com flash */
+				Session::flash('success', 'Sua conta foi ativada com sucesso! Agora basta logar para começar a jogar.');
+				return Redirect::to('login');
 			}
 			else {
-				/* redirecionar pra home com flash */
+				Session::flash('error', 'Conta inexistente ou já ativada!');
+				return Redirect::to('/');
 			}
 
 		}
 		catch (Sentry\SentryException $e) {
-			echo $e->getMessage();
-			/* redirecionar pra home com flash */
+			Session::flash('error', 'Conta inexistente ou já ativada!');
+			return Redirect::to('/');
 		}
 	}
 }

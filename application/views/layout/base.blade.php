@@ -21,6 +21,14 @@
 					@include('layout.menu')
 				</div>
 				<div class="span9" id="content">
+					@if (Session::has('info'))
+						{{ Alert::info(Session::get('info'), false) }}						
+					@elseif (Session::has('error'))
+						{{ Alert::info(Session::get('error'), false) }}		
+					@elseif (Session::has('success'))
+						{{ Alert::success(Session::get('success'), false) }}						
+					@endif
+
 					@yield('content')
 				</div>
 			</div>
