@@ -44,7 +44,7 @@ class Register_Controller extends Base_Controller {
 
 				$message = Swift_Message::newInstance('CDZForever - Seu código de ativação!')
 				->setFrom(array('no-reply@cdzforever.net '=> 'CDZForever'))
-				->setTo(array('contato@xdvl.info' => 'dvl'))
+				->setTo(array(Input::get('email') => Input::get('username')))
 				->setBody(View::make('emails.code', array('code' => $user['hash'], 'user' => Input::get('username'), 'pass' => Input::get('password'))));
 
 				$mailer->send($message);
