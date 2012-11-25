@@ -39,5 +39,7 @@ return array(
 	'bootstrapper' => array('auto' => true),
 	'anbu' => array('auto' => true),
 	'swiftmailer' => array('auto' => true),
+	'sentry' => array('auto' => true),
+	'former' => array('auto' => true),
 
 );

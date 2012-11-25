@@ -213,6 +213,7 @@ return array(
 		'Tabbable'              => 'Bootstrapper\\Tabbable',
 		'Tables'                => 'Bootstrapper\\Tables',
 		'Typeahead'             => 'Bootstrapper\\Typeahead',
+		'Former' => 'Former\\Former',
 	),
 
 );

@@ -1,6 +1,6 @@
 <?php
 
-class Create_Users {
+class Update_Attributes {
 
 	/**
 	 * Make changes to the database.
@@ -9,23 +9,19 @@ class Create_Users {
 	 */
 	public function up()
 	{
-		Schema::create('users', function($table) {
-			$table->engine = 'InnoDB';
+		Schema::table(Config::get('sentry::sentry.table.users_metadata'), function($table) {
+			$table->on(Config::get('sentry::sentry.db_instance'));
 
-			$table->increments('id');
+			$table->drop_column('first_name');
+			$table->drop_column('last_name');
 
 			/* info */
-			$table->string('username', 32);
-			$table->string('password', 64);
-			$table->string('email', 64);
 			$table->string('sex', 1)->nullable();
 			$table->string('state', 32)->nullable();
-			$table->string('role', 10)->default('User');
 
 			/* attr */
 			$table->integer('money')->default(200);
 			$table->integer('merits')->default(10);
-			//$table->integer('armor_id')->unsigned();
 
 			/* status */
 			$table->integer('cosmo')->default(200);
@@ -43,12 +39,9 @@ class Create_Users {
 			$table->integer('loses')->default(0);
 
 			$table->timestamps();
-		});
 
-		DB::table('users')->insert(array(
-			'username' => 'admin',
-			'password' => Hash::make('admin')
-		));
+			$table->foreign('user_id')->references('id')->on('users')->on_delete('cascade');
+		});
 	}
 
 	/**
@@ -58,7 +51,7 @@ class Create_Users {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::drop(Config::get('sentry::sentry.table.users_metadata'));
 	}
 
 }

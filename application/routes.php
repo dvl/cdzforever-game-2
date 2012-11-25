@@ -10,7 +10,7 @@ Route::get('/', 'home@index');
 Route::controller('register');
 Route::controller('login');
 
-Route::group(array('before' => 'auth'), function() {
+Route::group(array('before' => 'sentry'), function() {
 	// páginas que só serão exibidas para usuários logados
 });
 
@@ -53,12 +53,27 @@ Route::filter('csrf', function()
 
 Route::filter('auth', function()
 {
+	if (!Sentry::check()) return Redirect::to('login');
+});
+
+Route::filter('sentry', function()
+{
 	if (Auth::guest()) return Redirect::to('login');
 });
 
 Route::filter('ajax', function()
 {
 	if (!Request::ajax()) return Response::error('404');
+});
+
+Route::filter('pattern: admin/*', 'admin');
+
+Route::filter('admin', function ()
+{
+	if (!Sentry::user()->has_access('is_admin'))
+	{
+		return Response::error('404');
+	}
 });
 
 /*

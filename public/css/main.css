@@ -1,3 +1,4 @@
+
 body {
 	background: #01080E url('../img/_bg.jpg');
 	margin: 30px;
@@ -21,7 +22,8 @@ header {
 
 #content {
 	padding: 16px;
-	margin-left: 16px
+	margin-left: 16px;
+	background: #ffffff !important;
 }
 
 footer {

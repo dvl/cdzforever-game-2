@@ -26,7 +26,5 @@ class Login_Controller extends Base_Controller {
 
 	public function post_index() {
 
-
-
 	}
 }

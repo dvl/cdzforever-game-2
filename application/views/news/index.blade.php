@@ -1,5 +1,9 @@
 @layout('layout.base')
 
+@section('title')
+Início
+@endsection
+
 @section('content')
 <div class="hero-unit">
 	<h2>{{ __('Bem vindo(a),') }}</h2>

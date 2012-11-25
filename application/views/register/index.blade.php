@@ -5,30 +5,31 @@
 @endsection
 
 @section('content')
-	@if (Session::has('errors'))
-		<div class="alert alert-error">Por favor, corrija os seguintes erros antes de continuar:
-			{{ HTML::ul($errors); }}
-		</div>
-	@else
-		<p>Preencha o formulário abaixo para criar sua conta e começe a jogar agora mesmo.</p>
-	@endif
+	<h3>Criar nova conta</h3>
+	<p>Preencha o formulário abaixo para criar sua conta e começe a jogar agora mesmo.</p>
 	<hr>
-	{{ Form::horizontal_open() }}
 
-	{{ Form::control_group(Form::label('username', 'Usuário:'), Form::xlarge_text('username', null, array('placeholder' => 'Seu nick no jogo...'))) }}
+	{{ Former::horizontal_open()->method('POST')  }}
 
-	{{ Form::control_group(Form::label('email', 'E-Mail:'), Form::xlarge_text('email', null, array('placeholder' => 'E-mail para confirmação do cadastro..'))) }}
+	{{ Former::text('username', 'Usuário')->required()->min(3)->max(32)->placeholder('Seu nick no jogo...') }}
 
-	{{ Form::control_group(Form::label('password', 'Senha:'), Form::password('password', array('placeholder' => 'Sua senha...'))) }}
-	{{ Form::control_group(Form::label('password-check', 'Confirme:'), Form::password('password-check', array('placeholder' => 'Confirmação...')), '', Form::block_help('Durante a fase de desenvolvimento o registro de novos usuários é registro a convidados.')) }}
+	{{ Former::xlarge_text('email', 'E-mail')->required()->min(3)->max(32)->placeholder('E-mail para confirmação do cadastro...') }}
 
-	{{ Form::control_group(Form::label('genre', 'Sexo:'),Form::select('genre', array('Masculino', 'Feminino'))) }}
+	{{ Former::small_password('password', 'Senha')->required()->min(3)->max(32)->placeholder('Sua senha...') }}
 
-	{{ Form::control_group(Form::label('invite', 'Código:'), Form::xlarge_text('invite', null, array('placeholder' => 'Código do convite recebido :)'))) }}
+	{{ Former::small_password('password-check', 'Confirmação')->required()->min(3)->max(32)->placeholder('Confirmação...') }}
 
-	{{ Form::control_group(Form::label('checkbox', ''), Form::labelled_checkbox('rules', 'Li e concordo com as '.HTML::link('internal/rules','Regras').''), '', Form::labelled_checkbox('terms', 'Li e concordo com os '.HTML::link('internal/terms','Termos de Uso').'', 'terms')) }}
+	{{ Former::select('sex', 'Sexo')->options(array('M' => 'Masculino', 'F' => 'Feminino'))->required() }}
 
-	{{ Form::actions(array(Buttons::primary_submit('Enviar'))) }}
-	{{ Form::token() }}
-	{{ Form::close() }}
+	{{ Former::select('state', 'Estado')->fromQuery(State::all(), 'name')->required() }}
+
+	{{ Former::xlarge_text('invite', 'Convite')->required()->min(3)->max(32)->placeholder('Código do convite recebido :)') }}
+
+	{{ Former::checkbox('rules', '')->text('Li e concordo com as '.HTML::link('internal/rules','Regras do jogo').' e com os '.HTML::link('internal/terms','Termos de Uso').'.')->required() }}
+
+	{{ Former::actions(Former::primary_submit('Enviar'), Former::inverse_reset('Limpar')) }}
+
+	{{ Former::token() }}
+
+	{{ Former::close() }}
 @endsection

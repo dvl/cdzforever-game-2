@@ -13,13 +13,14 @@ class Create_Invites {
 			$table->engine = 'InnoDB';
 
 			$table->increments('id');
-			$table->integer('user_id')->unsigned();
-			$table->integer('used_by')->default(0);
+			$table->integer('user_id')->unsigned()->nullable();
+			$table->integer('used_by')->unsigned()->nullable();
 			$table->string('code', 32);
 
 			$table->timestamps();
 
 			$table->foreign('user_id')->references('id')->on('users');
+			$table->foreign('used_by')->references('id')->on('users');
 		});
 	}
 
