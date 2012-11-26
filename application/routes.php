@@ -7,13 +7,13 @@
 */
 
 Route::get('/', 'home@index');
+
 Route::controller('register');
 Route::controller('login');
 Route::controller('news');
 
-
 Route::group(array('before' => 'auth'), function() {
-	// páginas que só serão exibidas para usuários logados
+	Route::controller('profile');
 });
 
 Route::group(array('before' => 'admin'), function() {
@@ -88,7 +88,7 @@ View::composer('layout.base', function($view)
 	Asset::add('main-js','js/main.js');
 
 	Asset::add('bootstrap-css','css/bootstrap.css');
-	Asset::add('bootstrap-responsive','css/bootstrap-responsive.css','bootstrap-css');
+//	Asset::add('bootstrap-responsive','css/bootstrap-responsive.css','bootstrap-css');
 	Asset::add('main-css','css/main.css');
 });
 

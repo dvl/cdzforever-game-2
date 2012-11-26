@@ -30,15 +30,17 @@
 
 			<div class="row span9">
 				<div class="span9" id="content">
-					@if (Session::has('info'))
-						{{ Alert::info(Session::get('info'), false) }}						
-					@elseif (Session::has('error'))
-						{{ Alert::error(Session::get('error'), false) }}		
-					@elseif (Session::has('success'))
-						{{ Alert::success(Session::get('success'), false) }}						
-					@endif
+					<div class="wrapper">
+						@if (Session::has('info'))
+							{{ Alert::info(Session::get('info'), false) }}						
+						@elseif (Session::has('error'))
+							{{ Alert::error(Session::get('error'), false) }}		
+						@elseif (Session::has('success'))
+							{{ Alert::success(Session::get('success'), false) }}						
+						@endif
 
-					@yield('content')
+						@yield('content')
+					</div>
 				</div>
 			</div>
 		</div>

@@ -3,8 +3,8 @@ body {
 }
 
 header {
-	background: url('../img/banner.jpg') !important;
-	height: 200px;
+	background: #fff url('../img/banner.jpg') !important;
+	height: 100px;
 	margin-bottom: 16px;
 }
 
@@ -20,8 +20,6 @@ header {
 
 #content {
 	background: #FFFFFF;
-	padding: 16px; 
-	max-width: 838px;
 }
 
 footer {
@@ -29,6 +27,7 @@ footer {
 	font-weight: bold;
 	text-align: center;
 	font-size: small;
+	text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 header, #info, #menu, #content, footer, .container {
@@ -39,4 +38,8 @@ header, #info, #menu, #content, footer, .container {
 	background: rgba(0, 0, 0, 0.6);
 	padding: 16px;
 	margin-top: 16px;
+}
+
+.wrapper {
+	margin: 16px; /* para evitar ficar usando padding e reposicionando com margin os elementos posicionados com o bootstrap */
 }

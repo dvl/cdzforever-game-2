@@ -1,3 +1,5 @@
 <div class="span3" id="info">
-	Sideinfo
+	<div class="wrapper">
+		Lorem ipsum
+	</div>
 </div>
