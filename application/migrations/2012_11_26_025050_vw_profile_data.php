@@ -22,11 +22,11 @@ class Vw_Profile_Data {
 				ON u.id = attr.user_id
 				INNER JOIN states 
 				ON attr.state = states.id
-				INNER JOIN armors AS a
+				LEFT JOIN armors AS a
 				ON u.id = a.user_id
-				INNER JOIN categories 
+				LEFT JOIN categories 
 				ON a.category_id = categories.id
-				INNER JOIN classes
+				LEFT JOIN classes
 				ON a.class_id = classes.id");
 	}
 
