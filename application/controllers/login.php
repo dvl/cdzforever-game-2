@@ -16,7 +16,7 @@ class Login_Controller extends Base_Controller {
 	 */
 
 	public function get_index() {
-		if (Auth::check()) {
+		if (Sentry::check()) {
 			return Redirect::home();
 		}
 		else {
@@ -25,6 +25,21 @@ class Login_Controller extends Base_Controller {
 	}
 
 	public function post_index() {
-
+		try {
+			if (Sentry::login(Input::get('username'), Input::get('password'), Input::get('remember'))) {
+				Session::flash('success', 'Login efetuado!');
+				return Redirect::home();
+			}
+			else {
+				$errors = new Laravel\Messages();
+				$errors->add('password', 'Senha Inválida');
+				return Redirect::to('login')->with_errors($errors)->with_input();
+			}
+		}
+		catch (Sentry\SentryException $e) {
+			$errors = new Laravel\Messages();
+			$errors->add('username', $e->getMessage());
+			return Redirect::to('login')->with_errors($errors)->with_input();
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-if (Auth::guest()) {
+if (!Sentry::check()) {
 	$links = array(
 		array(
 			'label' =>'Login',
@@ -21,7 +21,7 @@ else {
 	$links = array(
 		array(
 			'label' => __('Perfil'),
-			'url' => URL::to('login'), 
+			'url' => URL::to('profile'), 
 			'icon' => 'user',
 			'active' => false
 		),

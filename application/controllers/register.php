@@ -16,7 +16,7 @@ class Register_Controller extends Base_Controller {
 	 */
 
 	public function get_index() {
-		if (Auth::check()) {
+		if (Sentry::check()) {
 			return Redirect::home();
 		}
 		else {
@@ -25,46 +25,42 @@ class Register_Controller extends Base_Controller {
 	}
 
 	public function post_index() {
-		try {
-			if (Register::is_valid(Input::get())) { 		
 
-				$user = Sentry::user()->register(array(
-					'username' => Input::get('username'),
-					'email'    => Input::get('email'),
-					'password' => Input::get('password'),
-					'metadata' => array(
-						'sex' => Input::get('sex'),
-						'state'  => Input::get('state'),
-					),
-				));
+		if (Register::is_valid(Input::get())) { 		
 
-				$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')->setUsername('no-reply@cdzforever.net')->setPassword('6m2U+KGy');
+			$user = Sentry::user()->register(array(
+				'username' => Input::get('username'),
+				'email'    => Input::get('email'),
+				'password' => Input::get('password'),
+				'metadata' => array(
+					'sex' => Input::get('sex'),
+					'state'  => Input::get('state'),
+				),
+			));
 
-				$mailer = Swift_Mailer::newInstance($transport);
+			/* Eu devia criar uma classe com isso */
 
-				$message = Swift_Message::newInstance('CDZForever - Seu código de ativação!')
-				->setFrom(array('no-reply@cdzforever.net '=> 'CDZForever'))
-				->setTo(array(Input::get('email') => Input::get('username')))
-				->setBody(View::make('emails.code', array('code' => $user['hash'], 'user' => Input::get('username'), 'pass' => Input::get('password'))));
+			$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')->setUsername('no-reply@cdzforever.net')->setPassword('6m2U+KGy');
 
-				$mailer->send($message);
+			$mailer = Swift_Mailer::newInstance($transport);
 
-				$invite = Invite::where('code', '=', Input::get('invite'))->first();
-				$invite->used_by = $user['id'];
-				$invite->save();
+			$message = Swift_Message::newInstance('CDZForever - Seu código de ativação!')
+			->setFrom(array('no-reply@cdzforever.net '=> 'CDZForever'))
+			->setTo(array(Input::get('email') => Input::get('username')))
+			->setBody(View::make('emails.code', array('code' => $user['hash'], 'user' => Input::get('username'), 'pass' => Input::get('password'))));
 
-				Session::flash('success', 'Sua conta foi criada com sucesso! Em instantes você deve receber um e-mail com instruções de como ativar sua conta.');
-				return Redirect::to('/');
-			}
+			$mailer->send($message);
 
-			else {
-				return Redirect::to('register')->with_errors(Register::$validation)->with_input();
-			}
+			$invite = Invite::where('code', '=', Input::get('invite'))->first();
+			$invite->used_by = $user['id'];
+			$invite->save();
+
+			Session::flash('success', 'Sua conta foi criada com sucesso! Em instantes você deve receber um e-mail com instruções de como ativar sua conta.');
+			return Redirect::to('/');
 		}
-		catch (Sentry\SentryException $e) {
-			$errors = new Laravel\Messages();
-			$errors->add('sentry', $e->getMessage());
-			return Redirect::to('register')->with_errors($errors)->with_input();
+
+		else {
+			return Redirect::to('register')->with_errors(Register::$validation)->with_input();
 		}
 	}
 

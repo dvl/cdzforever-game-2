@@ -9,7 +9,7 @@
 	<p>Preencha o formulário abaixo para criar sua conta e começe a jogar agora mesmo.</p>
 	<hr>
 
-	{{ Former::horizontal_open()->method('POST')  }}
+	{{ Former::horizontal_open()  }}
 
 	{{ Former::text('username', 'Usuário')->required()->min(3)->max(32)->placeholder('Seu nick no jogo...') }}
 

@@ -9,6 +9,7 @@
 Route::get('/', 'home@index');
 Route::controller('register');
 Route::controller('login');
+Route::controller('news');
 
 
 Route::group(array('before' => 'auth'), function() {
